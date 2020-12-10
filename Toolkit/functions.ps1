@@ -142,7 +142,7 @@ Function BalloonTip {
 }
 Function InstallMSI {
     Param([string]$File, [string]$Arguments, [Switch]$Wait)
-    If($Wait)
+    If($Wait.IsPresent)
     {
         Start-Process msiexec.exe -ArgumentList "/I `"$($RootPath)\Files\$($File)`" $($Arguments) /L*V `"C:\WINDOWS\Logs\AppDeploy.log`"" -Wait -NoNewWindow
     }
@@ -150,7 +150,7 @@ Function InstallMSI {
 }
 Function InstallEXE {
     Param([string]$File, [string]$Arguments, [Switch]$Wait)
-    If($Wait)
+    If($Wait.IsPresent)
     {
         Start-Process -FilePath "$($RootPath)\Files\$($File)" -ArgumentList "$($Arguments)" -Wait -NoNewWindow
     }
@@ -163,7 +163,7 @@ Function CopyFile {
 function WaitForProcess {
     Param([string]$Name, [Switch]$IgnoreAlreadyRunningProcesses)
 
-    if ($IgnoreAlreadyRunningProcesses)
+    if ($IgnoreAlreadyRunningProcesses.IsPresent)
     {
         $NumberOfProcesses = (Get-Process -Name $Name -ErrorAction SilentlyContinue).Count
     }
